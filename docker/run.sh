@@ -3,7 +3,7 @@
 cd /var/www
 
 php artisan key:generate
-php artisan migrate
+php artisan migrate --seed
 php artisan cache:clear
 php artisan route:cache
 
