@@ -1,0 +1,136 @@
+.appie-header-main-menu ul > li .big-device-none {
+    display: none;
+}
+
+/* Normal desktop :1200px. */
+@media (min-width: 1200px) and (max-width: 1500px) {
+    .shop-small-left-slider-active {
+        max-width: 309px;
+        transform: rotate(0);
+        position: inherit;
+        top: inherit;
+        left: inherit;
+        margin-left: 130px;
+    }
+
+}
+
+
+/* Normal desktop :992px. */
+@media (min-width: 992px) and (max-width: 1200px) {
+    .appie-header-main-menu ul li .mega-menu-main-wrap {
+        width: 930px;
+        left: -161px;
+    }
+    .appie-header-main-menu ul li .pages-mega-menu {
+        width: 933px !important;
+        padding: 15px 0px !important;
+        left: -237px;
+        padding-left: 9px !important;
+    }
+    .pages-mega-menu.mega-menu-mainn-wrap ul {
+        margin: 0 21px;
+    }
+
+    .appie-header-main-menu ul li .pages-mega-menu.blog-mega-menu  {
+        width: 672px !important;
+        padding: 15px 0px !important;
+        left: -237px;
+        padding-left: 9px !important;
+        padding-left: 20px !important;
+    }
+    .blog-wrap-ul {
+        width: 24% !important;
+    }
+    .mega-menu-recent-ports {
+        width: 306px;
+        margin-left: -40px;
+    }
+    .mega-r-post {
+        margin-left: -40px;
+    }
+    .blog-comment {
+        margin-left: 0;
+    }
+    .shop-small-left-slider-active {
+        max-width: 310px;
+        transform: rotate(0);
+        position: inherit;
+        top: inherit;
+        left: 80px;
+        display: block;
+    }
+
+   
+
+
+}
+
+ 
+/* Tablet desktop :768px. */
+@media (min-width: 768px) and (max-width: 991px) {
+    .appie-header-main-menu ul > li .big-device-none {
+        display: block;
+    } 
+    .shop-small-left-slider-active {
+        max-width: 310px;
+        transform: rotate(0deg);
+        position: inherit;
+        top: inherit;
+        left: 190px;
+    }
+
+   
+
+}
+
+
+
+
+@media (max-width: 400px) {
+    .shop-small-left-slider-active {
+        left: 30px;
+    }
+}
+
+ 
+/* small mobile :320px. */
+@media (max-width: 767px) {
+   
+
+    .shop-small-left-slider-active {
+        max-width: 310px;
+        transform: rotate(0deg);
+        position: inherit;
+        top: inherit;
+        left: 4px;
+    }
+    .animated_btn.animated_btn-ios {
+        padding: 1px 40px;
+    }
+    .animated_btn.animated_btn-ios {
+        margin-bottom: 20px;
+    }
+    .appie-hero-content ul li {
+        margin-bottom: 0;
+    }
+ 
+}
+
+ 
+/* Large Mobile :480px. */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+.container {width:450px}
+.shop-small-left-slider-active {
+	max-width: 310px;
+	transform: rotate(0deg);
+	position: inherit;
+	top: inherit;
+	left: 50px;
+}
+
+
+
+}
+
+

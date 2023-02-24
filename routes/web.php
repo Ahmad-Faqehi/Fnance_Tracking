@@ -6,9 +6,11 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\SmsController;
+use App\Http\Controllers\CustomUser;
+use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
 
-Route::redirect('/', '/dashboard');
+Route::redirect('/', '/home');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -23,6 +25,16 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    
+    Route::get('/home', function () {
+        return view('home');
+    });
+    
+    Route::get('/register', function () {
+        return view('register');
+    });
+    // Route::post('/register', 'CustomUser@store');
+    Route::post('register', [CustomUser::class, 'store'])->name('register');
 
     Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 });
