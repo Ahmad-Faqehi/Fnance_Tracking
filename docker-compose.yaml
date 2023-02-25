@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  #MySQL
+  database:
+    image: mysql/mysql-server:8.0
+    container_name: database
+    # volumes: # Todo:// Add your volumes
+    #   - /my/own/datadir:/var/lib/mysql 
+    restart: always
+    environment:
+      MYSQL_DATABASE: fnace
+      MYSQL_USER: ahmed
+      MYSQL_PASSWORD: harderpass123
+    ports:
+      - "3306:3306"
+
+ # Laravel Continer
+  web:
+    build: .
+    container_name: web_app
+    depends_on:
+      - database
+    ports:
+      - "80:80"
+    environment:
+      XDB_HOST: database
+      XDB_PORT: 3306
+      XDB_PASSWORD: harderpass123
+      XDB_USERNAME: ahmed
+      XDB_DATABASE: fnace
