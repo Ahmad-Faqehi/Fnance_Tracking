@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql_config
+data:
+  DATABASE_NAME: "fnace"
+  USERNAME: "ahmed"
