@@ -25,19 +25,19 @@ spec:
             - name: MYSQL_PASSWORD
               valueFrom: 
                secretKeyRef: 
-                name: mysqlSecret
+                name: mysql-secret
                 key: MYSQL_PASSWORD
 
             - name: MYSQL_DATABASE
               valueFrom:
                 configMapKeyRef:
-                  name: mysqlConfig
+                  name: mysql-config
                   key: DATABASE_NAME
             
             - name: MYSQL_USER
               valueFrom:
                 configMapKeyRef:
-                  name: mysqlConfig
+                  name: mysql-config
                   key: USERNAME
 
           volumeMounts:
