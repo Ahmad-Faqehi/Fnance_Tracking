@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fance-tracking-config
+data:
+  DB_HOST: "10.212.22.123"
+  DB_PORT: "3306"

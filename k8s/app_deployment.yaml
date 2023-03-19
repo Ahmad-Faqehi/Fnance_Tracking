@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fance-tracking
+  name: fance-tracking
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fance-tracking
+  template:
+    metadata:
+      labels:
+        app: fance-tracking
+    spec:
+      containers:
+      - image: ahmad75/fnance_tracking:1.0
+        name: fance-tracking
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: XDB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: fance-tracking-config
+              key: DB_HOST
+          
+        - name: XDB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: fance-tracking-config
+              key: DB_PORT
+
+        - name: XDB_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-config
+              key: USERNAME
+
+        - name: XDB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-config
+              key: DATABASE_NAME
+
+        - name: XDB_PASSWORD
+          valueFrom: 
+              secretKeyRef: 
+              name: mysql-secret
+              key: MYSQL_PASSWORD
+
+        ports:
+        - containerPort: 80
