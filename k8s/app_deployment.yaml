@@ -45,7 +45,7 @@ spec:
 
         - name: XDB_PASSWORD
           valueFrom: 
-              secretKeyRef: 
+            secretKeyRef: 
               name: mysql-secret
               key: MYSQL_PASSWORD
 
