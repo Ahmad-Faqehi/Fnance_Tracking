@@ -1,10 +1,9 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: mysql
 spec:
-  replicas: 3
-  serviceName: mysql
+  replicas: 1
   selector:
     matchLabels:
       app: mysql
@@ -13,14 +12,16 @@ spec:
       labels:
         app: mysql
     spec:
-      terminationGracePeriodSeconds: 10
       containers:
         - name: mysql
           image: mysql/mysql-server:8.0
+          imagePullPolicy: IfNotPresent
+
           ports:
             - name: tpc
               protocol: TCP
               containerPort: 3306
+
           env:
             - name: MYSQL_PASSWORD
               valueFrom: 
@@ -43,29 +44,9 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /var/lib/mysql
-  volumeClaimTemplates:
-    - metadata:
-        name: data
-      spec:
-        storageClassName: manual
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 2Gi
 
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: mysql-pv-volume
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 2Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/mnt/data"
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: db-pv-claim
+
