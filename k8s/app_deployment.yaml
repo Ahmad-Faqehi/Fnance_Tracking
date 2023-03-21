@@ -51,3 +51,9 @@ spec:
 
         ports:
         - containerPort: 80
+
+
+      # initContainers: # This init continer to test the DB is up and running before the app start
+      # - name: test-mysql
+      #   image: ahmad75/test-mysql
+      #   command: ['sh', '-c', 'until mysql --host=mysql.default.svc.cluster.local --user={MYSQL_USER} -password={MYSQL_PASSWORD} --execute=\"SELECT 1;\"; do echo waiting for mysql; sleep 2; done;']

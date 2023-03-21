@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cd /var/www
-
+sleep 1m
 php artisan key:generate
 php artisan migrate --seed
 php artisan cache:clear
