@@ -24,6 +24,8 @@ RUN apt-get update && apt-get install -y \
     curl \
     lua-zlib-dev \
     libmemcached-dev \
+    dnsutils \
+    iputils-ping \
     nginx
 
 # Install supervisor
