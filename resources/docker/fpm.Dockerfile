@@ -24,8 +24,8 @@ WORKDIR /var/www/html
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY /artisan artisan
-
-COPY /composer.json composer.json
+COPY . /var/www/html
+# COPY /composer.json composer.json
 
 RUN composer install --prefer-dist --no-ansi --no-dev --no-autoloader
 
@@ -35,7 +35,7 @@ COPY /config config
 COPY /routes routes
 
 
-COPY . /var/www/html
+# COPY . /var/www/html
 
 RUN composer dump-autoload -o
 
