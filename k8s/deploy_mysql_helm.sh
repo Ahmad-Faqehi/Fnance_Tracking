@@ -8,7 +8,7 @@ fi
 dbname=`cat ./app_config.yaml | grep -i "DB_DATABASE:" | awk {'print $2'}`
 dbuser=`cat ./app_config.yaml | grep -i "DB_USERNAME:" | awk {'print $2'}`
 dbpass=`cat ./app_secret.yaml | grep -i "DB_PASSWORD:" | awk {'print $2'} | base64 -d`
-helm repo add my-repo https://charts.bitnami.com/bitnami
+helm repo add bitnami https://charts.bitnami.com/bitnami
 
 echo "Executing..."
 echo "helm install mysql bitnami/mysql --set auth.database=$dbname --set auth.username=$dbuser --set auth.password=$dbpass"
