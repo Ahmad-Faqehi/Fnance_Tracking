@@ -1,11 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: fance-tracking
   name: fance-tracking
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: fance-tracking
@@ -13,47 +11,71 @@ spec:
     metadata:
       labels:
         app: fance-tracking
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "80"
     spec:
+      volumes:
+        - name: logs
+          emptyDir: {}
+        - name: cache
+          emptyDir: {}
+        - name: testing
+          emptyDir: {}
+        - name: sessions
+          emptyDir: {}
+        - name: views
+          emptyDir: {}
+      securityContext:
+        fsGroup: 82
+      initContainers:
+        - name: database-migrations
+          image: ahmad75/fnace-fpm:1.0
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: fance-tracking-config
+            - secretRef:
+                name: app-secret
+          command:
+            - "php"
+          args:
+            - "artisan"
+            - "migrate"
+            - "--force"
       containers:
-      - image: ahmad75/fnance_tracking:1.0
-        name: fance-tracking
-        imagePullPolicy: IfNotPresent
-        env:
-        - name: XDB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: fance-tracking-config
-              key: DB_HOST
-          
-        - name: XDB_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: fance-tracking-config
-              key: DB_PORT
-
-        - name: XDB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              name: mysql-config
-              key: USERNAME
-
-        - name: XDB_DATABASE
-          valueFrom:
-            configMapKeyRef:
-              name: mysql-config
-              key: DATABASE_NAME
-
-        - name: XDB_PASSWORD
-          valueFrom: 
-            secretKeyRef: 
-              name: mysql-secret
-              key: MYSQL_PASSWORD
-
-        ports:
-        - containerPort: 80
-
-
-      # initContainers: # This init continer to test the DB is up and running before the app start
-      # - name: test-mysql
-      #   image: ahmad75/test-mysql
-      #   command: ['sh', '-c', 'until mysql --host=mysql.default.svc.cluster.local --user={MYSQL_USER} -password={MYSQL_PASSWORD} --execute=\"SELECT 1;\"; do echo waiting for mysql; sleep 2; done;']
+        - name: nginx
+          imagePullPolicy: IfNotPresent
+          image: ahmad75/fnace-nginx:1.0
+          resources: {}
+            # limits:
+            #   cpu: 500m
+            #   memory: 50M
+          ports:
+            - containerPort: 80
+        - name: fpm
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: fance-tracking-config
+            - secretRef:
+                name: app-secret
+          securityContext:
+            runAsUser: 82
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: logs
+              mountPath: /var/www/html/storage/logs
+            - name: cache
+              mountPath: /var/www/html/storage/framework/cache
+            - name: sessions
+              mountPath: /var/www/html/storage/framework/sessions
+            - name: views
+              mountPath: /var/www/html/storage/framework/views
+            - name: testing
+              mountPath: /var/www/html/storage/framework/testing
+          resources: {}
+          image: ahmad75/fnace-fpm:1.0
+          ports:
+            - containerPort: 9000
