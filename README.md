@@ -37,8 +37,9 @@ Web application free open source, personal finance tracking. Build it with new t
 <!-- Tools and Technology -->
 ## Tools and Technology 🎯
 * []() PHP Laravel 8
-* []() React JS
 * []() MySQL 8
+* []() Graphql
+* []() React JS
 * []()Bootstrap 4
 
 <hr>
@@ -47,19 +48,24 @@ Web application free open source, personal finance tracking. Build it with new t
 ## DevOps Tools ♾️
 * []() Docker
 * []() Kubernetes
+* []() Helm
 * []() GitOps
 * []() Github Actions
 
-<hr>
+
+<br>
 
 <!-- Setup application -->
-## How to Setup 🚀
-To install this project with normal way of Laravel projects make sure you have the following on your machine:
+# Setuping the Project 🚀
+
+## Running with Normal Way  🏝
+Installing the project with normal way of Laravel projects. Make sure you have the following service on your machine:
+
 - php 8.x
 - MySQL 8
 - Composer
 
-First, clone the project to your machine:
+Clone the project to your machine:
 ```shell
 git clone https://github.com/Ahmad-Faqehi/Fnance_Tracking.git
 cd Fnance_Tracking/
@@ -92,8 +98,10 @@ php artisan serve
 Once done, visit the app on http://localhost:8000
 
 <br>
+<hr>
 
-## Running the application with Docker 🐳
+## Running the Application with Docker 🐳
+
 The easiest way to run the project is by using Docker Compose, make sure you already installed docker and docker composer on your machine.
 
 <br>
@@ -127,9 +135,34 @@ docker-compose down
 ```
 
 <br>
+<hr>
 
-## Running the application on kubernetes Cluster
-Soon...
+
+## Running the Application with Kubernetes ☸
+First of all make sure you has [Helm](https://helm.sh/docs/intro/install/) installed on your machine, becaues we will used to install the MySql database deployment.
+
+Enter kubernetes directory in this project
+``` shell
+cd k8s/
+```
+
+Applying helm to run MySql database.
+``` shell
+chmod u+x deploy_mysql_helm.sh
+./deploy_mysql_helm.sh
+```
+
+Apply the mainfests files of application.
+```shell
+kubectl apply -f .
+```
+
+Verified the status of pods
+```shell
+kubectl get pods
+```
+if everything is running, you can access the application throw,<br>
+http://localhost:30007
 
 <br>
 
