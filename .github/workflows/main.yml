@@ -45,10 +45,10 @@ jobs:
         with:
           images: ahmad75/fnace-nginx
 
-      # - name: Get Version 🔍️
-      #   run: |
-      #       echo "TAG_NAME=$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_OUTPUT
-      #   id: version
+      - name: Get Version 🔍️
+        run: |
+            echo "TAG_NAME=$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_OUTPUT
+        id: version
     
 
       - name: Build and push Docker image FPM 🐳
@@ -56,7 +56,7 @@ jobs:
         with:
           context: ./docker/fpm.Dockerfile
           push: false
-          tags: ahmad75/fnace-fpm:${{ steps.meta_fpm.outputs.tags }}
+          tags: ahmad75/fnace-fpm:main-${{ steps.version.outputs.TAG_NAME }}
 
 
 
