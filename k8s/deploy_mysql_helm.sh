@@ -14,3 +14,4 @@ echo "Executing..."
 echo "helm install mysql bitnami/mysql --set auth.database=$dbname --set auth.username=$dbuser --set auth.password=$dbpass"
 
 helm install mysql bitnami/mysql --set auth.database="$dbname" --set auth.username="$dbuser" --set auth.password="$dbpass"
+#TEST
