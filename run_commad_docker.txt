@@ -1,1 +1,0 @@
-docker run -d -p 8081:80 -e XDB_HOST=XXXX -e XDB_PORT=3306 -e XDB_DATABASE=finance -e XDB_USERNAME=ahmed -e XDB_PASSWORD=XXXX ahmad75/finich:1.3
