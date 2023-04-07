@@ -49,14 +49,22 @@ jobs:
         run: |
             echo "TAG_NAME=$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_OUTPUT
         id: version
+
+      - name: Print Tags 🔦
+        run: |
+            echo ${{ steps.meta_fpm.outputs.tags }}
+            echo ${{ steps.meta_fpm.outputs.labels }}
+        id: xxxversion
     
 
-      - name: Build and push Docker image FPM 🐳
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          file: ./docker/fpm.Dockerfile
-          push: false
-          tags: ahmad75/fnace-fpm:main-${{ steps.version.outputs.TAG_NAME }}
+      # - name: Build and push Docker image FPM 🐳
+      #   uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+      #   with:
+      #     file: ./docker/fpm.Dockerfile
+      #     push: false
+      #     # tags: ahmad75/fnace-fpm:main-${{ steps.version.outputs.TAG_NAME }}
+      #     tags: ${{ steps.meta_fpm.outputs.tags }}
+      #     labels: ${{ steps.meta_fpm.outputs.labels }}
 
 
 
