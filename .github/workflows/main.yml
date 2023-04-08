@@ -45,17 +45,20 @@ jobs:
         with:
           images: ahmad75/fnace-nginx
 
-      - name: Get Version 🔍️
+      - name: Get FPM Version 🔍️
         run: |
-            echo "TAG_NAME=$(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_OUTPUT
-        id: version
+            curent_fpm_tag=`cat ./k8s/app_deployment.yaml | grep fnace-fpm: | awk {'print $2'} | cut -d ':' -f 2 | head -1`
+            new_fpm_tag=`echo $curent_fpm_tag + 0.1 | bc`
+            echo "FPM_TAG_NAME=$(echo $new_fpm_tag)" >> $GITHUB_OUTPUT
+        id: fpm_version
+      
+      - name: Get Nginx Version 🔍️
+        run: |
+            curent_nginx_tag=`cat ./k8s/app_deployment.yaml | grep fnace-nginx: | awk {'print $2'} | cut -d ':' -f 2 | head -1`
+            new_nginx_tag=`echo $curent_nginx_tag + 0.1 | bc`
+            echo "NGINX_TAG_NAME=$(echo $new_nginx_tag)" >> $GITHUB_OUTPUT
+        id: nginx_version
 
-      - name: Print Tags 🔦
-        run: |
-            echo ${{ steps.meta_fpm.outputs.tags }}
-            echo ${{ steps.meta_fpm.outputs.labels }}
-        id: xxxversion
-    
 
       # - name: Build and push Docker image FPM 🐳
       #   uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
