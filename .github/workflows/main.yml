@@ -66,6 +66,14 @@ jobs:
           file: ./docker/fpm.Dockerfile
           push: true
           tags: ahmad75/fnace-fpm:${{ steps.fpm_version.outputs.FPM_TAG_NAME }}
+      
+      
+      - name: Build and push Docker image Nginx👽
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          file: ./docker/nginx.Dockerfile
+          push: true
+          tags: ahmad75/fnace-nginx:${{ steps.nginx_version.outputs.NGINX_TAG_NAME }}
 
 
 
