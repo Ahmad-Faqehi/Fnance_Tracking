@@ -83,7 +83,7 @@ jobs:
         id: nginx_version
       
       
-      - name: Build and push Docker image Nginx👽
+      - name: Build and push Docker image Nginx 👽
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           file: ./docker/nginx.Dockerfile
@@ -100,11 +100,24 @@ jobs:
       with:
         token: ${{ secrets.TOKEN_GIT }}
 
-    - name: Update Version 💬
+    - name: Update FPM Image Tag Version 💬
       run: |
-          git_hash=$(git rev-parse --short "$GITHUB_SHA")
-          echo 123
+          curent_fpm_tag=`cat ./k8s/app_deployment.yaml | grep fnace-fpm: | awk {'print $2'} | cut -d ':' -f 2 | head -1`
+          new_fpm_tag=`echo $curent_fpm_tag + 0.1 | bc`
+          sed -i "s/fnace-fpm:$curent_fpm_tag/fnace-fpm:$new_fpm_tag/" k8s/app_deployment.yaml
+
+    - name: Update Nginx Image Tag Version 💬
+      run: |
+          curent_nginx_tag=`cat ./k8s/app_deployment.yaml | grep fnace-nginx: | awk {'print $2'} | cut -d ':' -f 2 | head -1`
+          new_nginx_tag=`echo $curent_nginx_tag + 0.1 | bc`
+          sed -i "s/fnace-nginx:$curent_nginx_tag/fnace-nginx:$new_nginx_tag/" k8s/app_deployment.yaml
           
+    - name: Commit and push Changes 🚀
+      uses: devops-infra/action-commit-push@v0.3
+      with:
+        github_token: ${{ secrets.TOKEN_GIT }}
+        commit_message: Version updated
+        
     # - name: Commit and push Changes 🚀
     #   uses: devops-infra/action-commit-push@v0.3
     #   with:
