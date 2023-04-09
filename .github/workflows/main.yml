@@ -18,8 +18,8 @@ on:
 
 jobs:
 
-  build_images:
-    name: Build Docker Images 🐳
+  build_FPM_image:
+    name: Build FPM Docker Images 🐳
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -39,12 +39,6 @@ jobs:
         with:
           images: ahmad75/fnace-fpm
       
-      - name: Extract metadata for Docker Image Nginx 📄
-        id: meta_nginx
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: ahmad75/fnace-nginx
-
       - name: Get FPM Version 🔍️
         run: |
             curent_fpm_tag=`cat ./k8s/app_deployment.yaml | grep fnace-fpm: | awk {'print $2'} | cut -d ':' -f 2 | head -1`
@@ -52,20 +46,40 @@ jobs:
             echo "FPM_TAG_NAME=$(echo $new_fpm_tag)" >> $GITHUB_OUTPUT
         id: fpm_version
       
-      - name: Get Nginx Version 🔍️
-        run: |
-            curent_nginx_tag=`cat ./k8s/app_deployment.yaml | grep fnace-nginx: | awk {'print $2'} | cut -d ':' -f 2 | head -1`
-            new_nginx_tag=`echo $curent_nginx_tag + 0.1 | bc`
-            echo "NGINX_TAG_NAME=$(echo $new_nginx_tag)" >> $GITHUB_OUTPUT
-        id: nginx_version
-
-
       - name: Build and push Docker image FPM 🐳
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           file: ./docker/fpm.Dockerfile
           push: true
           tags: ahmad75/fnace-fpm:${{ steps.fpm_version.outputs.FPM_TAG_NAME }}
+      
+  build_Nginx_image:
+    name: Build Nginx Docker Images 👽
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.TOKEN_GIT }}
+
+      - name: Log in to Docker Hub 🔐
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+            
+      - name: Extract metadata for Docker Image Nginx 📄
+        id: meta_nginx
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ahmad75/fnace-nginx
+      
+      - name: Get Nginx Version 🔍️
+        run: |
+            curent_nginx_tag=`cat ./k8s/app_deployment.yaml | grep fnace-nginx: | awk {'print $2'} | cut -d ':' -f 2 | head -1`
+            new_nginx_tag=`echo $curent_nginx_tag + 0.1 | bc`
+            echo "NGINX_TAG_NAME=$(echo $new_nginx_tag)" >> $GITHUB_OUTPUT
+        id: nginx_version
       
       
       - name: Build and push Docker image Nginx👽
@@ -75,7 +89,26 @@ jobs:
           push: true
           tags: ahmad75/fnace-nginx:${{ steps.nginx_version.outputs.NGINX_TAG_NAME }}
 
+  update_gitops:
+    name: Update GitOps 💥
+    runs-on: ubuntu-latest
+    needs: pushing
+    steps:  
+    - name: Checkout 🗃️
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.TOKEN_GIT }}
 
+    - name: Update Version 💬
+      run: |
+          git_hash=$(git rev-parse --short "$GITHUB_SHA")
+          echo 123
+          
+    # - name: Commit and push Changes 🚀
+    #   uses: devops-infra/action-commit-push@v0.3
+    #   with:
+    #     github_token: ${{ secrets.TOKEN_GIT }}
+    #     commit_message: Version updated
 
   # push_to_registry:
   #   name: Push Docker image to Docker Hub
