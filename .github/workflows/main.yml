@@ -56,6 +56,7 @@ jobs:
   build_Nginx_image:
     name: Build Nginx Docker Images 👽
     runs-on: ubuntu-latest
+    needs: build_FPM_image
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -92,7 +93,7 @@ jobs:
   update_gitops:
     name: Update GitOps 💥
     runs-on: ubuntu-latest
-    needs: pushing
+    needs: build_Nginx_image
     steps:  
     - name: Checkout 🗃️
       uses: actions/checkout@v3
