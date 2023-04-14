@@ -101,7 +101,7 @@
                 <div class="col-lg-6">
                     <div class="appie-hero-content">
                         <h1 class="appie-title">Financial Resource Plans Tracker</h1>
-                        <p>Personal finance tracking web application with the ability to parse SMS transactions and generate very useful insights about your money.</p>
+                        <p>Financial Resource Plans Tracker is a powerful Business finance tracking web application designed to help Business manage their money better.</p>
                         <ul>
                             <li><a href="/register">Get Started</a></li>
                         </ul>
