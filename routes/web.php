@@ -20,7 +20,8 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
     // Route::get('/sms', [SmsController::class, 'index'])->name('sms');
 
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    // Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+    Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
 Route::middleware(['guest'])->group(function () {
