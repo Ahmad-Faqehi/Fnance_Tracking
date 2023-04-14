@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/home');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions');
-    Route::get('/brands', [BrandController::class, 'index'])->name('brands');
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-    Route::get('/sms', [SmsController::class, 'index'])->name('sms');
+//     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions');
+//     Route::get('/brands', [BrandController::class, 'index'])->name('brands');
+//     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
+//     Route::get('/sms', [SmsController::class, 'index'])->name('sms');
 
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-});
+//     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+// });
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
