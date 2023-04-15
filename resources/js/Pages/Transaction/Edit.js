@@ -76,6 +76,17 @@ export default function Edit({brands, transaction, onClose, onUpdate}) {
                             displayOptionValue={(item) => item ? `${item.name} (${item.category?.name ?? 'N/A'})` : ''}
                             />
                     </div>
+                    
+                    <div className="col-span-6 sm:col-span-3 mt-4">
+                        <Combobox 
+                            label="Brand" 
+                            items={brands} 
+                            initialSelectedItem={brand}
+                            onChange={(item) => setBrand(item)}
+                            displayInputValue={(item) => item ? `${item.name} (${item.category?.name ?? 'N/A'})` : ''}
+                            displayOptionValue={(item) => item ? `${item.name} (${item.category?.name ?? 'N/A'})` : ''}
+                            />
+                    </div>
 
                     <div className="mt-4">
                         <Label forInput="note" value="Note (optional)" />

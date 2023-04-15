@@ -43,12 +43,12 @@ export default function Authenticated({ header, children }) {
                                     Categories
                                 </NavLink>
                             </div>
-
+{/* 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink href={route('sms')} active={route().current('sms')}>
                                     SMS Parser
                                 </NavLink>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
