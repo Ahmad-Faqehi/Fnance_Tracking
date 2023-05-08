@@ -45,10 +45,17 @@ export default function Authenticated({ header, children }) {
                             </div>
 {/* 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('sms')} active={route().current('sms')}>
-                                    SMS Parser
+                                <NavLink href='/item'>
+                                    Products
                                 </NavLink>
                             </div> */}
+
+                            <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                {/* <NavLink href='/item'>
+                                    Products
+                                </NavLink> */}
+                                <a href='/item' className='inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out'> Products </a>
+                            </div>
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">

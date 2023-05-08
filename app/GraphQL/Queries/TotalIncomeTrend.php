@@ -33,11 +33,12 @@ class TotalIncomeTrend extends TrendMetric
             ->select(DB::raw("date_format(created_at, '%Y-%m') as label, SUM(transactions.amount) as value"))
             ->groupBy(DB::raw("label"))
             ->orderBy("label");
+            
 
         if($rangeData) {
             $query->whereBetween('transactions.created_at', [$rangeData->start(), $rangeData->end()]);
         }
-            
+        // return dump($query);
         return $query->get();
     }
 }

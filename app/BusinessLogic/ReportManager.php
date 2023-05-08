@@ -135,7 +135,8 @@ class ReportManager implements ReportManagerContract
         $change = ! $totalCashExcludingThisMonth ? '-' : number_format(($totalCashTillNow / $totalCashExcludingThisMonth - 1) * 100, 2);
         
         return [
-            'name' => 'Total Cash',
+            // 'name' => 'Total Cash',
+            'name' => 'Total Balance',
             'total_current_month' => $totalCashTillNow,
             'total_previous_month' => $totalCashExcludingThisMonth,
             'change' => $change,

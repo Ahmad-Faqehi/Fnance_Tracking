@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\CustomUser;
+use App\Http\Controllers\ItemController;
 use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/brands', [BrandController::class, 'index'])->name('brands');
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
     Route::get('/sms', [SmsController::class, 'index'])->name('sms');
+
+    // Route::get('/item', [ItemController::class, 'create']);
+    Route::get('/item', function(){
+        return view('items');
+    });
+    Route::post('itemcreare', [ItemController::class, 'store'])->name('item');
+
 
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
     // Route::get('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -34,8 +42,11 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/register', function () {
         return view('register');
     });
+    Route::post('/itemcreare', function () {
+        return 123;
+    });
+
     // Route::post('/register', 'CustomUser@store');
     Route::post('register', [CustomUser::class, 'store'])->name('register');
-
     Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 });
