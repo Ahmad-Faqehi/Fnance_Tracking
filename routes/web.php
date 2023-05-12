@@ -25,7 +25,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/item', function(){
         return view('items');
     });
-    Route::post('itemcreare', [ItemController::class, 'store'])->name('item');
+
+    Route::post('/item', [ItemController::class, 'store'])->name('item');
+
+    // Route::post('itemcreare', [ItemController::class, 'store'])->name('item');
 
 
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
@@ -42,9 +45,7 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/register', function () {
         return view('register');
     });
-    Route::post('/itemcreare', function () {
-        return 123;
-    });
+
 
     // Route::post('/register', 'CustomUser@store');
     Route::post('register', [CustomUser::class, 'store'])->name('register');

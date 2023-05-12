@@ -141,7 +141,7 @@
         </button>
       </div>
       <div class="modal-body">
-      <form method="POST" action="/itemcreare">
+      <form method="POST" action="/item">
             @csrf
               <div class="form-group">
                 <label for="name">Name</label>
@@ -213,11 +213,11 @@ if (name.length==0 || price_creattion.length==0 || price_selling.length==0 || ca
   })
 
 }else{
-    axios.post('/itemcreare', {
+    axios.post('/item', {
     name: name,
-    price_creattion: price_creattion,
+    price_creation: price_creattion,
     price_selling: price_selling,
-    catogrey: catogrey,
+    category: catogrey,
   })
   .then(function (response) {
       
