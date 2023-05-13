@@ -8,7 +8,21 @@ use Illuminate\Http\Request;
 class ItemController extends Controller
 {
     //
-     /**
+     
+    
+    public function index()
+    {
+        //
+       
+        $item = new Item();
+        $item = $item::all();
+        return view("items")->with("item",$item);
+
+    }
+
+    
+    
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -35,19 +49,37 @@ class ItemController extends Controller
         }else{
             return json_encode(array ('type'=>'error', 'title'=>'Error', 'msg'=>'There some error while adding the product.'));
         }
+     
+        
+    }
 
-        // // Todo: Chcek if email already usded
-        // if(User::where('email', '=', $user->email)->first()){
-        //     return json_encode(array ('type'=>'error', 'title'=>'Error', 'msg'=>'The email is already used.'));
-        // }
-        
-        // if($user->save()){
-            
-        // auth()->login($user);
-        // return json_encode(array ('type'=>'success', 'title'=>'That Great', 'msg'=>'The registration done successfully.'));
-        // }else{
-        //     return json_encode(array ('type'=>'error', 'title'=>'Error', 'msg'=>'There is error while registering'));
-        // }        
-        
+    public function update(Request $request){
+        $item = new Item();
+        $item = $item::find($request->id);
+        $item->name = $request->input('name');
+        $item->price_creation = $request->input('price_creation');
+        $item->price_selling = $request->input('price_selling');
+        $item->category = $request->input('category');  
+
+       
+        if($item->update()){
+            return json_encode(array ('type'=>'success', 'title'=>'Update Done', 'msg'=>'The update done successfully.'));
+        }else{
+            return json_encode(array ('type'=>'error', 'title'=>'Error', 'msg'=>'There is error while update'));
+        }
+    }
+
+    public function delete($id)
+    {
+        //
+
+        $item = new Item();
+        $delete = $item::find($id)->forceDelete();
+
+        if($delete){
+            return redirect('/item');
+        }else{
+            return redirect('/item');
+        }
     }
 }

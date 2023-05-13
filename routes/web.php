@@ -21,12 +21,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
     Route::get('/sms', [SmsController::class, 'index'])->name('sms');
 
-    // Route::get('/item', [ItemController::class, 'create']);
-    Route::get('/item', function(){
-        return view('items');
-    });
+
+    Route::get('/item', [ItemController::class, 'index'])->name('itemview');
+    Route::get('/delete/{id}', [ItemController::class, 'delete'])->name('itemdelete');
 
     Route::post('/item', [ItemController::class, 'store'])->name('item');
+    Route::patch('/item', [ItemController::class, 'update'])->name('itemupdate');
 
     // Route::post('itemcreare', [ItemController::class, 'store'])->name('item');
 
