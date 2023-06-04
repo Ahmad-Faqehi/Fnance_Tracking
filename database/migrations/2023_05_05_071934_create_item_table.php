@@ -18,6 +18,7 @@ class CreateItemTable extends Migration
             $table->string('name');
             $table->double('price_creation');
             $table->double('price_selling');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('category');
             $table->timestamps();
         });

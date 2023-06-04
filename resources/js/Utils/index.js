@@ -13,7 +13,8 @@ export const formatNumber = (number, format = '(0[.]000a)') => {
         return num.format()
     }
 
-    return num.format(format)
+    // return num.format(format)
+    return number
 }
 
 export const animateRowItem = (id, animation = 'updated', callback = null) => {
