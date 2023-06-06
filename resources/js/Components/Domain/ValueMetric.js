@@ -55,11 +55,11 @@ export default function ValueMetric({name, graphql_query, ranges}) {
     const decreaseColor = () => name.toLowerCase().includes("expense") ? 'text-green-500' : 'text-red-500'
 
     return (
-        <Card>
+        <Card className={ name === 'Total Savings' ?  "hidden" : ""   || name === 'Total Investment' ?  "hidden" : "" } >
             <div className="px-6 py-4">
                 <div className="flex justify-between items-center mb-2">
                     <h3 className="mr-3 text-base text-gray-700 font-bold">
-                        { name === 'Total Cash' ? "Total Balnce": name}
+                        { name === 'Total Cash' ? "Total Balnce": name === 'Total Expenses' ? "Total Outcomes" : name }
                     </h3>
 
                     {ranges && <select className="ml-auto min-w-24 h-8 text-xs border-none appearance-none bg-gray-100 pl-2 pr-6 rounded active:outline-none active:shadow-outline focus:outline-none focus:shadow-outline"
