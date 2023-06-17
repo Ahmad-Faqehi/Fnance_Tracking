@@ -112,10 +112,10 @@ Another useful way to create transactions automatically is to read and parse tra
 For example, try to parse the following SMS message:
 
 ```text
-Purchase of SRA 125.50 with Credit Card ending 9048 at IKEA, DUBAI.
+Purchase of SAR 125.50 with Credit Card ending 9048 at IKEA, DUBAI.
 ```
 
-This SMS will create a new transaction with SRA 125.5 amount and brand is IKEA. If the brand is unknown to the system, it will be highlighted in red in order for you to link it with the correct category and it's a one-time job only.
+This SMS will create a new transaction with SAR 125.5 amount and brand is IKEA. If the brand is unknown to the system, it will be highlighted in red in order for you to link it with the correct category and it's a one-time job only.
 
 ![parse-sms](/images/parse-sms.png)
 

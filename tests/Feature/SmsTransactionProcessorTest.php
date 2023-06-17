@@ -29,7 +29,7 @@ class SmsTransactionProcessorTest extends TestCase
     /** @test */
     public function valid_template_with_unknown_brand_should_create_sms_with_transaction_with_new_brand_with_no_category()
     {
-        $sms = "Purchase of SRA 106.00 with Credit Card at ENOC,";
+        $sms = "Purchase of SAR 106.00 with Credit Card at ENOC,";
 
         $sut = app(SmsTransactionProcessor::class);
         $sut->process($sms);
@@ -47,7 +47,7 @@ class SmsTransactionProcessorTest extends TestCase
     {
         $knownBrand = Brand::factory()->create(['name' => 'ENOC']);
 
-        $sms = "Purchase of SRA 106.00 with Credit Card at ENOC,";
+        $sms = "Purchase of SAR 106.00 with Credit Card at ENOC,";
 
         $sut = app(SmsTransactionProcessor::class);
         $sut->process($sms);
@@ -62,7 +62,7 @@ class SmsTransactionProcessorTest extends TestCase
     {
         $knownBrand = Brand::factory()->create(['name' => 'someBrand']);
 
-        $sms = "Payment of SRA 38.7 to someBrand with Credit Card ending 9048. Avl Cr. Limit is SRA 53,750.64.";
+        $sms = "Payment of SAR 38.7 to someBrand with Credit Card ending 9048. Avl Cr. Limit is SAR 53,750.64.";
 
         $sut = app(SmsTransactionProcessor::class);
         $sut->process($sms);
@@ -77,7 +77,7 @@ class SmsTransactionProcessorTest extends TestCase
     {
         $knownBrand = Brand::factory()->create(['name' => 'Salary']);
 
-        $sms = "Salary of SRA 70,000.00 has been credited into your account XXX99XXX.";
+        $sms = "Salary of SAR 70,000.00 has been credited into your account XXX99XXX.";
 
         $sut = app(SmsTransactionProcessor::class);
         $sut->process($sms);
@@ -112,7 +112,7 @@ class SmsTransactionProcessorTest extends TestCase
     /** @test */
     public function it_process_passed_sms_model_and_update_meta()
     {
-        $smsModel = Sms::create(['body' => 'Purchase of SRA 106.00 with Credit Card at ENOC,', 'meta' => []]);
+        $smsModel = Sms::create(['body' => 'Purchase of SAR 106.00 with Credit Card at ENOC,', 'meta' => []]);
 
         $sut = app(SmsTransactionProcessor::class);
         $result = $sut->process($smsModel);
@@ -126,7 +126,7 @@ class SmsTransactionProcessorTest extends TestCase
     {
         $knownBrand = Brand::factory()->create(['name' => 'someBrand']);
 
-        $sms = "SRA 5.65 has been debited from account 8118 using debit card at someBrand on 25-06-2022 13:29. Your avl";
+        $sms = "SAR 5.65 has been debited from account 8118 using debit card at someBrand on 25-06-2022 13:29. Your avl";
 
         $sut = app(SmsTransactionProcessor::class);
         $sut->process($sms);

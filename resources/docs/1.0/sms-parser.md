@@ -18,10 +18,10 @@ Examples from the registered templates are:
 
 ```text
 # Template
-Payment of SRA {amount} to {brand} with {card}.
+Payment of SAR {amount} to {brand} with {card}.
 
 # Example of Actual SMS
-Payment of SRA 102.0 to Amazon.ae with Creidt Card ending with XXXX.
+Payment of SAR 102.0 to Amazon.ae with Creidt Card ending with XXXX.
 ```
 
 As you can see, the template inherit the original SMS structure with dynamic variables
@@ -33,10 +33,10 @@ As you can see, the template inherit the original SMS structure with dynamic var
 
 ```text
 # Template
-{brand} of SRA {amount} has been credited 
+{brand} of SAR {amount} has been credited 
 
 # Example of Actual SMS
-Salary of SRA 1000.0 has been credited 
+Salary of SAR 1000.0 has been credited 
 ```
 
 <a name="sms-template"></a>

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Category;
 use Illuminate\Http\Request;
+
+use function GuzzleHttp\Promise\all;
 
 class ItemController extends Controller
 {
@@ -14,9 +17,12 @@ class ItemController extends Controller
     {
         //
        
+        $category = new Category();
+        $category = $category::all();
         $item = new Item();
         $item = $item::all();
-        return view("items")->with("item",$item);
+        return view("items",['item' => $item],['category' => $category]);
+        // return view("items")->with("item",$item,"category",$category);
 
     }
 

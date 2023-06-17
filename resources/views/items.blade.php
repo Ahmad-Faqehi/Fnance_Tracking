@@ -21,8 +21,6 @@
 </head>
 <body style="background-color: #f1f5f9;">
 
-    
-
 
 <nav class="bg-white border-b border-gray-100">
    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -97,12 +95,12 @@
                           
                         <!-- Todo: Loop from here -->
                         @foreach ($item as $it)
-                           <tr class="loaded" id="item-10">
-                              <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">{{$it->id}}</td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">{{$it->name}}</td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">SAR {{$it->price_creation}}</td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">SAR {{$it->price_selling}}</td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">{{$it->category}}</td>
+                           <tr class="loaded" id="item-{{$it->id}}">
+                              <td id="{{$it->id}}-id" class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">{{$it->id}}</td>
+                              <td id="{{$it->id}}-name" class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">{{$it->name}}</td>
+                              <td id="{{$it->id}}-price_creation" class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">SAR {{$it->price_creation}}</td>
+                              <td id="{{$it->id}}-price_selling" class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">SAR {{$it->price_selling}}</td>
+                              <td id="{{$it->id}}-category" class="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">{{$it->category}}</td>
                               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                  <button type="button" data-toggle="modal" data-target="#edit_exampleModal{{$it->id}}" class="ml-2">
                                     <span class="sr-only">Edit</span>
@@ -124,11 +122,68 @@
 
                      </table>
                   </div>
+                  
                </div>
+
+               <!-- Todo: if there is no items hide this button -->
+               @if (sizeof($item) !== 0)
+               <div class="text-center pt-5">
+               <button type="button" data-toggle="modal" data-target="#silverModal" class="inline-flex items-center px-4 py-2 bg-rose-500 hover:bg-rose-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest active:bg-rose-500 transition ease-in-out duration-150 undefined ">Silver Calculator</button>
+               </div>
+               @endif
             </div>
+            
          </div>
       </div>
    </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="silverModal" tabindex="-1" aria-labelledby="silverModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="silverModal">Silver Calculator</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form method="POST" action="/item">
+            @csrf
+              <div class="form-group">
+                <label for="name">Product</label>
+                <select name="product" id="silver_product" onchange="val()" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full">
+                <option value=""></option>
+                @foreach ($item as $it)
+                <option value="{{$it->id}}">{{$it->name}}</option>
+                @endforeach
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="price_creattion">Price Creattion</label>
+                <input type="number" id="silver_price_creattion" value="" readonly class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full" require>
+              </div>
+              <div class="form-group">
+                <label for="price_selling">Price Selling</label>
+                <input type="number" id="silver_price_selling" value="" readonly class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full" require>
+              </div>
+
+              <div class="form-group">
+                <label for="price_selling">Expected Demand</label>
+                <input type="number" id="silver_Expected" value="" placeholder="Input the Expected Demand"  class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full" require>
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest active:bg-gray-500 transition ease-in-out duration-150" data-dismiss="modal">Close</button>
+        <button type="button" id="calculate"  class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest active:bg-blue-500 transition ease-in-out duration-150">Calculate</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 <!-- Modal -->
@@ -158,12 +213,56 @@
               </div>
               <div class="form-group">
                 <label for="catogrey">Catogrey</label>
-                <input type="text" id="catogrey" required class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full">
+                <select name="catogrey" id="catogrey" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full">
+                @foreach ($category as $cat)
+                <option value="{{$cat->name}}">{{$cat->name}}</option>
+                @endforeach
+                </select>
               </div>
-
-              <!-- <input type="submit" value="Create" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"> -->
             </form>
-         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest active:bg-gray-500 transition ease-in-out duration-150" data-dismiss="modal">Close</button>
+        <button type="button" id="create_prod"  class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest active:bg-blue-500 transition ease-in-out duration-150">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Products</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form method="POST" action="/item">
+            @csrf
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" required class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full">
+              </div>
+              <div class="form-group">
+                <label for="price_creattion">Price Creattion</label>
+                <input type="number" id="price_creattion" required class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full" require>
+              </div>
+              <div class="form-group">
+                <label for="price_selling">Price Selling</label>
+                <input type="number" id="price_selling" required class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full" require>
+              </div>
+              <div class="form-group">
+                <label for="catogrey">Catogrey</label>
+                <select name="catogrey" id="catogrey" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full">
+                @foreach ($category as $cat)
+                <option value="{{$cat->name}}">{{$cat->name}}</option>
+                @endforeach
+                </select>
+              </div>
+            </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest active:bg-gray-500 transition ease-in-out duration-150" data-dismiss="modal">Close</button>
@@ -202,7 +301,12 @@
               </div>
               <div class="form-group">
                 <label for="catogrey">Catogrey</label>
-                <input type="text" id="edit_catogrey{{$it->id}}" value="{{$it->category}}" required class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full">
+                <select  id="edit_catogrey{{$it->id}}" class="border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm mt-1 block w-full">
+                <option value="{{$it->category}}" selected >{{$it->category}}</option>
+                @foreach ($category as $cat)
+                <option value="{{$cat->name}}">{{$cat->name}}</option>
+                @endforeach
+                </select>
               </div>
 
               <!-- <input type="submit" value="Create" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm"> -->
@@ -257,6 +361,70 @@
 <script>
 
 
+document.getElementById('calculate').onclick = function() {
+
+    let costPerUnit = document.getElementById("silver_price_creattion").value;
+    let sellingPricePerUnit = document.getElementById("silver_price_selling").value;
+    let expectedDemand = document.getElementById("silver_Expected").value;
+    // console.log(costPerUnit, sellingPricePerUnit, expectedDemand)
+    optimalQuantity = costBenefitAnalysis(costPerUnit, sellingPricePerUnit, expectedDemand);
+    swal({
+        title: "Silver Calcuater",
+        text: "The Optimum lot for production is "+optimalQuantity,
+        icon: 'info',
+        buttons: true
+      })
+    // console.log(optimalQuantity)
+}
+
+
+function calculateProfit(quantity, costPerUnit, sellingPricePerUnit) {
+  const profit = (sellingPricePerUnit - costPerUnit) * quantity;
+  return profit;
+}
+
+function costBenefitAnalysis(costPerUnit, sellingPricePerUnit, expectedDemand) {
+  let maxProfit = 0;
+  let optimalQuantity = 0;
+
+  for (let quantity = 1; quantity <= expectedDemand; quantity++) {
+    const profit = calculateProfit(quantity, costPerUnit, sellingPricePerUnit);
+    if (profit > maxProfit) {
+      maxProfit = profit;
+      optimalQuantity = maxProfit;
+    }
+  }
+
+  return optimalQuantity;
+}
+
+// const optimalQuantity = costBenefitAnalysis(costPerUnit, sellingPricePerUnit, expectedDemand);
+
+
+function keepNumbersOnly(inputString) {
+  var numbersOnly = inputString.replace(/\D/g, '');
+  return numbersOnly;
+}
+
+function val(){
+
+ id = document.getElementById("silver_product").value
+ if (id == ""){
+  document.getElementById("silver_price_creattion").value = ''
+  document.getElementById("silver_price_selling").value = ''
+ }else{
+
+  
+ document.getElementById("silver_price_creattion").value = keepNumbersOnly(document.getElementById(id+"-price_creation").textContent)
+ document.getElementById("silver_price_selling").value =  keepNumbersOnly(document.getElementById(id+"-price_selling").textContent)
+ 
+
+}
+}
+
+
+
+
 
 function ValidateEmail(input) {
 
@@ -269,6 +437,7 @@ if (input.match(validRegex)) {
 }
 
 }
+
 
 
 document.getElementById('create_prod').onclick = function() {
