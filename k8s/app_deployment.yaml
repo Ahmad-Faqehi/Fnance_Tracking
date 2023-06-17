@@ -31,7 +31,7 @@ spec:
         fsGroup: 82
       initContainers:
         - name: database-migrations
-          image: ahmad75/fnace-fpm:2.6
+          image: ahmad75/fnace-fpm:2.7
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
@@ -47,7 +47,7 @@ spec:
       containers:
         - name: nginx
           imagePullPolicy: IfNotPresent
-          image: ahmad75/fnace-nginx:2.6
+          image: ahmad75/fnace-nginx:2.7
           resources: {}
             # limits:
             #   cpu: 500m
@@ -76,6 +76,6 @@ spec:
             - name: testing
               mountPath: /var/www/html/storage/framework/testing
           resources: {}
-          image: ahmad75/fnace-fpm:2.6
+          image: ahmad75/fnace-fpm:2.7
           ports:
             - containerPort: 9000
