@@ -8,7 +8,7 @@ fi
 dbname=`cat ./app_config.yaml | grep -i "DB_DATABASE:" | awk {'print $2'}`
 dbuser=`cat ./app_config.yaml | grep -i "DB_USERNAME:" | awk {'print $2'}`
 dbpass=`cat ./app_secret.yaml | grep -i "DB_PASSWORD:" | awk {'print $2'} | base64 -d`
-rdispass=`cat ./app_secret.yaml | grep -i "REDIS_PASS:" | awk {'print $2'} | base64 -d`
+rdispass=`cat ./app_secret.yaml | grep -i "REDIS_PASSWORD:" | awk {'print $2'} | base64 -d`
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
 echo "Executing..."
