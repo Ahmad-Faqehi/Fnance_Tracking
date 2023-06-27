@@ -38,6 +38,7 @@ Web application free open source, personal finance tracking. Build it with new t
 ## Tools and Technology 🎯
 * []() PHP Laravel 8
 * []() MySQL 8
+* []() Redis
 * []() Graphql
 * []() React JS
 * []()Bootstrap 4
@@ -148,6 +149,7 @@ cd k8s/
 
 Applying helm to run MySql database.
 ``` shell
+chmod u+x deploy_mysql_redis_helm.sh
 ./deploy_mysql_redis_helm.sh
 ```
 
