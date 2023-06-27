@@ -148,8 +148,7 @@ cd k8s/
 
 Applying helm to run MySql database.
 ``` shell
-chmod u+x deploy_mysql_helm.sh
-./deploy_mysql_helm.sh
+./deploy_mysql_redis_helm.sh
 ```
 
 Apply the mainfests files of application.
@@ -166,7 +165,7 @@ http://localhost:30007
 
 <br>
 
-The application is forked from [Saleem Hadad](https://github.com/saleem-hadad)
+The backend is forked from [Saleem Hadad](https://github.com/saleem-hadad)
 
 <hr>
 
